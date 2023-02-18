@@ -44,7 +44,9 @@ function stringEditor(startString, maxLength, addedString) {
   if (maxLength > addedString.length) {
     addedString += addedString.repeat(maxLength / addedString.length);
   }
-  return addedString.slice(0, maxLength) + String(startString);
+  return `Результат: строка '${
+    addedString.slice(0, maxLength) + String(startString)
+  }'`;
 }
 
 lengthStringChecker('asdasdasdadadadasd', 10);
