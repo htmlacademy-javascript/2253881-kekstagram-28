@@ -52,3 +52,4 @@ function stringEditor(startString, maxLength, addedString) {
 lengthStringChecker('asdasdasdadadadasd', 10);
 palindromChecker('Лёша на полке клопа нашёл ');
 pullingNumber('adjskdahsdk ajsdkhasdkjhs.../ // //');
+stringEditor('q', 4, 'we');
