@@ -93,10 +93,3 @@ function generatorObj() {
 for (let i = 0; i < 25; i++) {
   arrOfsmth.push(generatorObj());
 }
-console.log(arrOfsmth.sort((a, b) => a.id - b.id));
-// console.log(
-//   arrOfsmth.sort((a, b) =>
-//     Number(a.url.replace(/\D/g, '') - Number(b.url.replace(/\D/g, '')))
-//   )
-// );
-console.log(arrOfsmth.sort((a, b) => a.id - b.id));
