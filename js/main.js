@@ -1,5 +1,5 @@
 const arrOfSmth = [];
-const description = [
+const DESCRIPTIONS = [
   'красивый',
   'мужественный',
   'милый',
@@ -13,7 +13,7 @@ const description = [
   'смешной',
 ];
 
-const messages = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -22,7 +22,7 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const names = [
+const NAMES = [
   'Никитос',
   'Никиточка',
   'Ник',
@@ -70,8 +70,8 @@ function getUniqCommentsGenerator() {
     const comment = {
       id: getUniqNumberGenerator(0, count, 'id', arrOfComments),
       avatar: `img/avatar-${getRandomNumGenerator(0, 6)}.svg`,
-      message: messages[getRandomNumGenerator(0, messages.length - 1)],
-      name: names[getRandomNumGenerator(0, names.length - 1)],
+      message: MESSAGES[getRandomNumGenerator(0, MESSAGES.length - 1)],
+      name: NAMES[getRandomNumGenerator(0, NAMES.length - 1)],
     };
     arrOfComments.push(comment);
   }
@@ -83,7 +83,8 @@ function generateObj() {
   return {
     id: getUniqNumberGenerator(0, 25, 'id', arrOfSmth),
     url: `photos/${getUniqPhotoIdGenerator(0, 25)}.jpg`,
-    description: description[getRandomNumGenerator(0, description.length - 1)],
+    description:
+      DESCRIPTIONS[getRandomNumGenerator(0, DESCRIPTIONS.length - 1)],
     likes: getRandomNumGenerator(15, 200),
     comments: getUniqCommentsGenerator(),
   };
