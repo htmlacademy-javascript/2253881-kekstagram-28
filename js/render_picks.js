@@ -1,7 +1,6 @@
-// eslint-disable-next-line
 import arrOfSmth from './utils.js';
 
-function addPicksToWindow() {
+function renderPicksToWindow() {
   const templatePic = document
     .querySelector('#picture')
     .content.querySelector('.picture');
@@ -21,4 +20,4 @@ function addPicksToWindow() {
   windowsToRenderPicks.append(fragmentForPics);
 }
 
-export default addPicksToWindow;
+export default renderPicksToWindow;
