@@ -1,12 +1,12 @@
-function lengthStringChecker(string, numberLength) {
+const lengthStringChecker = (string, numberLength) => {
   const result = string.length > numberLength;
 
   return result
     ? `Результат: ${result} - строка проходит по длине`
     : `Результат: ${result} — строка не проходит`;
-}
+};
 
-function palindromChecker(string) {
+const palindromChecker = (string) => {
   const result = string
     .replace(/\s/g, '')
     .split('')
@@ -17,15 +17,14 @@ function palindromChecker(string) {
   return string.replace(/\s/g, '').toLowerCase() === result
     ? 'Результат: true - строка является палиндромом'
     : 'Результат: false - это не палиндром';
-}
+};
 
-function pullingNumber(string) {
-  return string.replace(/\D/g, '') === ''
+const pullingNumber = (string) =>
+  string.replace(/\D/g, '') === ''
     ? 'Результат: NaN'
     : `Результат: число ${Number(string.replace(/\D/g, ''))}`;
-}
 
-function stringEditor(startString, maxLength, addedString) {
+const stringEditor = (startString, maxLength, addedString) => {
   if (startString.length >= maxLength) {
     return `Результат: строка ${startString}`;
   }
@@ -47,7 +46,7 @@ function stringEditor(startString, maxLength, addedString) {
   return `Результат: строка '${
     addedString.slice(0, maxLength) + String(startString)
   }'`;
-}
+};
 
 lengthStringChecker('asdasdasdadadadasd', 10);
 palindromChecker('Лёша на полке клопа нашёл ');

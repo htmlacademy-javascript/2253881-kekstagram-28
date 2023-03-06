@@ -2,19 +2,18 @@ import { NAMES, MESSAGES, DESCRIPTIONS } from './data.js';
 
 const arrOfSmth = [];
 
-function getRandomNumGenerator(a, b) {
-  return Math.floor(Math.random() * (b - a + 1) + a);
-}
+const getRandomNumGenerator = (a, b) =>
+  Math.floor(Math.random() * (b - a + 1) + a);
 
-function getUniqNumberGenerator(num1, num2, fieldOfObj, arr) {
+const getUniqNumberGenerator = (num1, num2, fieldOfObj, arr) => {
   let uniqRandNum = getRandomNumGenerator(num1, num2);
   while (!arr.every((elem) => elem[fieldOfObj] !== uniqRandNum)) {
     uniqRandNum = getRandomNumGenerator(num1, num2);
   }
   return uniqRandNum;
-}
+};
 
-function getUniqPhotoIdGenerator(num1, num2) {
+const getUniqPhotoIdGenerator = (num1, num2) => {
   let uniqRandNum = getRandomNumGenerator(num1, num2);
   while (
     !arrOfSmth.every(
@@ -24,9 +23,9 @@ function getUniqPhotoIdGenerator(num1, num2) {
     uniqRandNum = getRandomNumGenerator(num1, num2);
   }
   return uniqRandNum;
-}
+};
 
-function getUniqCommentsGenerator() {
+const getUniqCommentsGenerator = () => {
   const arrOfComments = [];
   const count = getRandomNumGenerator(0, 300);
   for (let i = 0; i < count; i++) {
@@ -40,18 +39,15 @@ function getUniqCommentsGenerator() {
   }
 
   return arrOfComments;
-}
+};
 
-function generateObj() {
-  return {
-    id: getUniqNumberGenerator(0, 25, 'id', arrOfSmth),
-    url: `photos/${getUniqPhotoIdGenerator(0, 25)}.jpg`,
-    description:
-      DESCRIPTIONS[getRandomNumGenerator(0, DESCRIPTIONS.length - 1)],
-    likes: getRandomNumGenerator(15, 200),
-    comments: getUniqCommentsGenerator(),
-  };
-}
+const generateObj = () => ({
+  id: getUniqNumberGenerator(0, 25, 'id', arrOfSmth),
+  url: `photos/${getUniqPhotoIdGenerator(0, 25)}.jpg`,
+  description: DESCRIPTIONS[getRandomNumGenerator(0, DESCRIPTIONS.length - 1)],
+  likes: getRandomNumGenerator(15, 200),
+  comments: getUniqCommentsGenerator(),
+});
 
 // arrOfSmth = Array.from({ length: 15 }, generateObj);
 for (let i = 0; i < 25; i++) {

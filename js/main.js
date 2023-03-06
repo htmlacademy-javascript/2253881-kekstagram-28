@@ -1,5 +1,5 @@
 //import arrOfSmth from './utils.js';
 
-import renderPicksToWindow from './render_picks.js';
+import renderPicksIntoWindow from './render-picks.js';
 
-renderPicksToWindow();
+renderPicksIntoWindow();
