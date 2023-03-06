@@ -1,4 +1,4 @@
 // eslint-disable-next-line
 import arrOfSmth from './utils.js';
-
-//console.log(arrOfSmth);
+// eslint-disable-next-line
+import templatePic from './render_picks.js';
