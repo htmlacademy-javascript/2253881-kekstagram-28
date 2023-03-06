@@ -1,4 +1,5 @@
-// eslint-disable-next-line
-import arrOfSmth from './utils.js';
-// eslint-disable-next-line
-import templatePic from './render_picks.js';
+//import arrOfSmth from './utils.js';
+
+import addPicksToWindow from './render_picks.js';
+
+addPicksToWindow();
