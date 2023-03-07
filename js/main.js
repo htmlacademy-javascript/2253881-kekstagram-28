@@ -1,4 +1,5 @@
-// eslint-disable-next-line
-import arrOfSmth from './utils.js';
+//import arrOfSmth from './utils.js';
 
-//console.log(arrOfSmth);
+import renderPicksIntoWindow from './render-picks.js';
+
+renderPicksIntoWindow();

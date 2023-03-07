@@ -1,7 +1,11 @@
 # Личный проект «Кекстаграм»
 
 - Студент: [Nikita Khokhlov](https://up.htmlacademy.ru/javascript/28/user/2253881).
+<<<<<<< HEAD
+- Наставник: `Дмитрий Гуляев`.
+=======
 - Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
+>>>>>>> 83dff2c1fc01222d9b676c07b74d7788e6c7469a
 
 ---
 
