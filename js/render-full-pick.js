@@ -17,6 +17,7 @@ export const renderFullPick = (evt, mainPickElem) => {
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', closeFullPickOnEsc);
       closeButtonElem.removeEventListener('click', closeFullPickElem);
+      windowForCommentsElem.innerHTML = '<ul class="social__comments"></ul>';
     }
   };
 
@@ -27,6 +28,7 @@ export const renderFullPick = (evt, mainPickElem) => {
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', closeFullPickOnEsc);
     closeButtonElem.removeEventListener('click', closeFullPickElem);
+    windowForCommentsElem.innerHTML = '<ul class="social__comments"></ul>';
   }
 
   closeButtonElem.addEventListener('click', closeFullPickElem);
@@ -61,6 +63,5 @@ export const renderFullPick = (evt, mainPickElem) => {
     cloneOfCommentElem.children[0].alt = elem.name;
     cloneOfCommentElem.children[1].textContent = elem.message;
     windowForCommentsElem.append(cloneOfCommentElem);
-    cloneOfCommentElem.innerHtml = '';
   });
 };
