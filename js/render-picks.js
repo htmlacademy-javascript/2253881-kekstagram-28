@@ -1,4 +1,5 @@
 import arrOfSmth from './utils.js';
+import { renderFullPick } from './render-full-pick.js';
 
 const renderPicksIntoWindow = () => {
   const templatePicElem = document
@@ -14,6 +15,9 @@ const renderPicksIntoWindow = () => {
     cloneTemplateElem.children[1].children[1].textContent = elem.likes;
     cloneTemplateElem.children[1].children[0].textContent =
       elem.comments.length;
+    cloneTemplateElem.addEventListener('click', (evt) =>
+      renderFullPick(evt, elem)
+    );
     fragmentForPicsElem.append(cloneTemplateElem);
   });
 

@@ -31,7 +31,7 @@ const getUniqCommentsGenerator = () => {
   for (let i = 0; i < count; i++) {
     const comment = {
       id: getUniqNumberGenerator(0, count, 'id', arrOfComments),
-      avatar: `img/avatar-${getRandomNumGenerator(0, 6)}.svg`,
+      avatar: `img/avatar-${getRandomNumGenerator(1, 6)}.svg`,
       message: MESSAGES[getRandomNumGenerator(0, MESSAGES.length - 1)],
       name: NAMES[getRandomNumGenerator(0, NAMES.length - 1)],
     };
@@ -42,8 +42,8 @@ const getUniqCommentsGenerator = () => {
 };
 
 const generateObj = () => ({
-  id: getUniqNumberGenerator(0, 25, 'id', arrOfSmth),
-  url: `photos/${getUniqPhotoIdGenerator(0, 25)}.jpg`,
+  id: getUniqNumberGenerator(1, 25, 'id', arrOfSmth),
+  url: `photos/${getUniqPhotoIdGenerator(1, 25)}.jpg`,
   description: DESCRIPTIONS[getRandomNumGenerator(0, DESCRIPTIONS.length - 1)],
   likes: getRandomNumGenerator(15, 200),
   comments: getUniqCommentsGenerator(),
