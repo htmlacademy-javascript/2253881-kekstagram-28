@@ -1,5 +1,5 @@
 import arrOfSmth from './utils.js';
-import { renderFullPick } from './render-full-pick.js';
+import renderFullPick from './render-full-pick.js';
 
 const renderPicksIntoWindow = () => {
   const templatePicElem = document

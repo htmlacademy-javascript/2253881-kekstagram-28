@@ -1,4 +1,4 @@
-export const renderFullPick = (evt, mainPickElem) => {
+const renderFullPick = (evt, mainPickElem) => {
   const { url, description, likes, comments } = mainPickElem;
 
   document.body.classList.add('modal-open');
@@ -17,7 +17,7 @@ export const renderFullPick = (evt, mainPickElem) => {
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', closeFullPickOnEsc);
       closeButtonElem.removeEventListener('click', closeFullPickElem);
-      windowForCommentsElem.innerHTML = '<ul class="social__comments"></ul>';
+      windowForCommentsElem.innerHTML = '';
     }
   };
 
@@ -28,7 +28,7 @@ export const renderFullPick = (evt, mainPickElem) => {
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', closeFullPickOnEsc);
     closeButtonElem.removeEventListener('click', closeFullPickElem);
-    windowForCommentsElem.innerHTML = '<ul class="social__comments"></ul>';
+    windowForCommentsElem.innerHTML = '';
   }
 
   closeButtonElem.addEventListener('click', closeFullPickElem);
@@ -65,3 +65,5 @@ export const renderFullPick = (evt, mainPickElem) => {
     windowForCommentsElem.append(cloneOfCommentElem);
   });
 };
+
+export default renderFullPick;
