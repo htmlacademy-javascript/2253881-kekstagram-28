@@ -1,7 +1,37 @@
 export const renderFullPick = (evt, mainPickElem) => {
   const { url, description, likes, comments } = mainPickElem;
+
+  document.body.classList.add('modal-open');
+
   evt.preventDefault();
+
   const fullPickWindowElem = document.querySelector('.big-picture');
+  const closeButtonElem = fullPickWindowElem.querySelector('#picture-cancel');
+  const windowForCommentsElem =
+    fullPickWindowElem.querySelector('.social__comments');
+
+  // eslint-disable-next-line
+  const closeFullPickOnEsc = (evt) => {
+    if (evt.keyCode === 27) {
+      fullPickWindowElem.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      document.removeEventListener('keydown', closeFullPickOnEsc);
+      closeButtonElem.removeEventListener('click', closeFullPickElem);
+    }
+  };
+
+  // eslint-disable-next-line
+  function closeFullPickElem(evt) {
+    evt.preventDefault();
+    fullPickWindowElem.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', closeFullPickOnEsc);
+    closeButtonElem.removeEventListener('click', closeFullPickElem);
+  }
+
+  closeButtonElem.addEventListener('click', closeFullPickElem);
+  document.addEventListener('keydown', closeFullPickOnEsc);
+
   fullPickWindowElem.classList.remove('hidden');
   fullPickWindowElem.querySelector('.big-picture__img').children[0].src = url;
   fullPickWindowElem.querySelector('.likes-count').textContent = likes;
@@ -22,9 +52,6 @@ export const renderFullPick = (evt, mainPickElem) => {
   commentElem.append(commentImgElem);
   commentElem.append(commentPiElem);
 
-  const windowForCommentsElem =
-    fullPickWindowElem.querySelector('.social__comments');
-
   fullPickWindowElem.querySelector('.social__caption').textContent =
     description;
 
@@ -34,5 +61,6 @@ export const renderFullPick = (evt, mainPickElem) => {
     cloneOfCommentElem.children[0].alt = elem.name;
     cloneOfCommentElem.children[1].textContent = elem.message;
     windowForCommentsElem.append(cloneOfCommentElem);
+    cloneOfCommentElem.innerHtml = '';
   });
 };
