@@ -1,5 +1,10 @@
 const renderFullPick = (evt, mainPickElem) => {
   const { url, description, likes, comments } = mainPickElem;
+  const escButtonCode = 27;
+  const SIZE_OF_AVATARS = {
+    WIDTH: 35,
+    HEIGHT: 35,
+  };
 
   document.body.classList.add('modal-open');
 
@@ -12,7 +17,7 @@ const renderFullPick = (evt, mainPickElem) => {
 
   // eslint-disable-next-line
   const closeFullPickOnEsc = (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === escButtonCode) {
       fullPickWindowElem.classList.add('hidden');
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', closeFullPickOnEsc);
@@ -45,8 +50,8 @@ const renderFullPick = (evt, mainPickElem) => {
 
   const commentImgElem = document.createElement('img');
   commentImgElem.classList.add('social__picture');
-  commentImgElem.width = '35';
-  commentImgElem.height = '35';
+  commentImgElem.width = SIZE_OF_AVATARS.WIDTH;
+  commentImgElem.height = SIZE_OF_AVATARS.HEIGHT;
 
   const commentPiElem = document.createElement('p');
   commentPiElem.classList.add('social__text');
