@@ -1,6 +1,6 @@
 const renderFullPick = (evt, mainPickElem) => {
   const { url, description, likes, comments } = mainPickElem;
-  const escButtonCode = 27;
+  const ESC_BUTTON_CODE = 27;
   const SIZE_OF_AVATARS = {
     WIDTH: 35,
     HEIGHT: 35,
@@ -17,7 +17,7 @@ const renderFullPick = (evt, mainPickElem) => {
 
   // eslint-disable-next-line
   const closeFullPickOnEsc = (evt) => {
-    if (evt.keyCode === escButtonCode) {
+    if (evt.keyCode === ESC_BUTTON_CODE) {
       fullPickWindowElem.classList.add('hidden');
       document.body.classList.remove('modal-open');
       document.removeEventListener('keydown', closeFullPickOnEsc);
