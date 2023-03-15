@@ -33,12 +33,7 @@ const editorForm = () => {
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value
       .split('')
-      .reduce((acc, elem) => {
-        if (elem === '#') {
-          acc++;
-        }
-        return acc;
-      }, 0);
+      .reduce((acc, elem) => (elem === '#' ? (acc += 1) : acc), 0);
 
     if (pristine.validate() && countOfCages <= 5) {
       buttonSubmitElem.disabled = false;
