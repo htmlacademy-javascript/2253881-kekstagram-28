@@ -48,7 +48,7 @@ const editorForm = () => {
   };
 
   commentAreaElem.oninput = (evt) => {
-    if (evt.target.value.length < 140) {
+    if (evt.target.value.length <= 140) {
       buttonSubmitElem.disabled = false;
     } else {
       buttonSubmitElem.disabled = true;
