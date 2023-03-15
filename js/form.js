@@ -15,19 +15,35 @@ const editorForm = () => {
     '.scale__control--value'
   );
   const inputHashtagElem = document.querySelector('.text__hashtags');
-  const ESC_BUTTON_CODE = 'Escape';
+  const buttonSubmitElem = formEditedImgElem.querySelector(
+    '.img-upload__submit'
+  );
+  const ESC_BUTTON_CODE = 27;
 
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
 
   const validateHashTag = (val) => {
-    const regexp = /(#[a-zа-яё0-9]{1,19}\s)*#[a-zа-яё0-9]{1,19}$/gi;
-    return regexp.text(val) || val === '';
+    const regexp = /^(#[a-zа-яё0-9]{1,19}\s)*#[a-zа-яё0-9]{1,19}$/gi;
+    return regexp.test(val) || val === '';
   };
 
   pristine.addValidator(inputHashtagElem, validateHashTag);
 
-  inputHashtagElem.onchange = () => {
-    console.log(pristine.validate());
+  inputHashtagElem.oninput = () => {
+    const countOfCages = inputHashtagElem.value
+      .split('')
+      .reduce((acc, elem) => {
+        if (elem === '#') {
+          acc++;
+        }
+        return acc;
+      }, 0);
+
+    if (pristine.validate() && countOfCages <= 5) {
+      buttonSubmitElem.disabled = false;
+    } else {
+      buttonSubmitElem.disabled = true;
+    }
   };
 
   imgFromFormElem.style.transform = 'scale(1)';
@@ -53,8 +69,10 @@ const editorForm = () => {
   };
 
   document.onkeydown = (evt) => {
-    evt.preventDefault();
-    if (evt.code === ESC_BUTTON_CODE) {
+    if (
+      evt.keyCode === ESC_BUTTON_CODE &&
+      evt.target.className !== 'text__hashtags'
+    ) {
       formEditedImgElem.classList.add('hidden');
       document.body.classList.remove('modal-open');
       loadImgElem.value = '';
@@ -80,7 +98,6 @@ const editorForm = () => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       imgFromFormElem.src = fileReader.result;
-
       allPicksElem.forEach((elem) => {
         elem.style.backgroundImage = `url(${fileReader.result})`;
       });
