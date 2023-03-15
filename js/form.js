@@ -1,30 +1,23 @@
+import {
+  ESC_BUTTON_CODE,
+  COUNT_OF_SYMBOLS_TEXTAREA,
+  STEP_100,
+  STEP_25,
+  COUNT_FOR_CAGES,
+  loadImgElem,
+  formEditedImgElem,
+  imgFromFormElem,
+  closeFormElem,
+  allPicksElem,
+  makeBiggerElem,
+  makeSmallerElem,
+  inputOfScale,
+  inputHashtagElem,
+  buttonSubmitElem,
+  commentAreaElem,
+} from './data-for-form.js';
+
 const editorForm = () => {
-  const ESC_BUTTON_CODE = 'Escape';
-  const COUNT_OF_SYMBOLS_TEXTAREA = 140;
-  const STEP_25 = 25;
-  const STEP_100 = 100;
-  const COUNT_FOR_CAGES = 5;
-  const loadImgElem = document.querySelector('#upload-file');
-  const formEditedImgElem = document.querySelector('.img-upload__overlay');
-  const imgFromFormElem = formEditedImgElem.querySelector('img');
-  const closeFormElem = formEditedImgElem.querySelector('#upload-cancel');
-  const allPicksElem = formEditedImgElem.querySelectorAll('.effects__preview');
-  const makeSmallerElem = formEditedImgElem.querySelector(
-    '.scale__control--smaller'
-  );
-  const makeBiggerElem = formEditedImgElem.querySelector(
-    '.scale__control--bigger'
-  );
-
-  const inputOfScale = formEditedImgElem.querySelector(
-    '.scale__control--value'
-  );
-  const inputHashtagElem = document.querySelector('.text__hashtags');
-  const buttonSubmitElem = formEditedImgElem.querySelector(
-    '.img-upload__submit'
-  );
-  const commentAreaElem = formEditedImgElem.querySelector('.text__description');
-
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
 
   const validateHashTag = (val) => {
