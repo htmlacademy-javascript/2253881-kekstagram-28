@@ -3,6 +3,7 @@ const editorForm = () => {
   const COUNT_OF_SYMBOLS_TEXTAREA = 140;
   const STEP_25 = 25;
   const STEP_100 = 100;
+  const COUNT_FOR_CAGES = 5;
   const loadImgElem = document.querySelector('#upload-file');
   const formEditedImgElem = document.querySelector('.img-upload__overlay');
   const imgFromFormElem = formEditedImgElem.querySelector('img');
@@ -34,11 +35,11 @@ const editorForm = () => {
   pristine.addValidator(inputHashtagElem, validateHashTag);
 
   inputHashtagElem.oninput = () => {
-    const countOfCages = inputHashtagElem.value
-      .split('')
-      .reduce((acc, elem) => (elem === '#' ? (acc += 1) : acc), 0);
-
-    if (pristine.validate() && countOfCages <= 5) {
+    // const countOfCages = inputHashtagElem.value
+    //   .split('')
+    //   .reduce((acc, elem) => (elem === '#' ? (acc += 1) : acc), 0);
+    const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
+    if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
       buttonSubmitElem.disabled = false;
     } else {
       buttonSubmitElem.disabled = true;
