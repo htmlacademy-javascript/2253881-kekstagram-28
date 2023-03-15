@@ -61,9 +61,9 @@ const editorForm = () => {
 
   makeBiggerElem.onclick = (evt) => {
     evt.preventDefault();
-    if (Number(inputOfScale.value.replace(/\D/g, '')) < STEP_25) {
+    if (Number(inputOfScale.value.replace(/\D/g, '')) < STEP_100) {
       inputOfScale.value = `${
-        Number(inputOfScale.value.replace(/\D/g, '')) + STEP_100
+        Number(inputOfScale.value.replace(/\D/g, '')) + STEP_25
       }%`;
       imgFromFormElem.style.transform = `scale(${inputOfScale.value})`;
     }
