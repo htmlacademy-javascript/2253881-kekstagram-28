@@ -4,13 +4,62 @@ const editorForm = () => {
   const imgFromFormElem = formEditedImgElem.querySelector('img');
   const closeFormElem = formEditedImgElem.querySelector('#upload-cancel');
   const allPicksElem = formEditedImgElem.querySelectorAll('.effects__preview');
+  const makeSmallerElem = formEditedImgElem.querySelector(
+    '.scale__control--smaller'
+  );
+  const makeBiggerElem = formEditedImgElem.querySelector(
+    '.scale__control--bigger'
+  );
+
+  const inputOfScale = formEditedImgElem.querySelector(
+    '.scale__control--value'
+  );
+  const inputHashtagElem = document.querySelector('.text__hashtags');
   const ESC_BUTTON_CODE = 'Escape';
+
+  const pristine = new Pristine(document.querySelector('.img-upload__form'));
+
+  const validateHashTag = (val) => {
+    const regexp = /(#[a-zа-яё0-9]{1,19}\s)*#[a-zа-яё0-9]{1,19}$/gi;
+    return regexp.text(val) || val === '';
+  };
+
+  pristine.addValidator(inputHashtagElem, validateHashTag);
+
+  inputHashtagElem.onchange = () => {
+    console.log(pristine.validate());
+  };
+
+  imgFromFormElem.style.transform = 'scale(1)';
+
+  makeSmallerElem.onclick = (evt) => {
+    evt.preventDefault();
+    if (Number(inputOfScale.value.replace(/\D/g, '')) - 25 > 0) {
+      inputOfScale.value = `${
+        Number(inputOfScale.value.replace(/\D/g, '')) - 25
+      }%`;
+      imgFromFormElem.style.transform = `scale(${inputOfScale.value})`;
+    }
+  };
+
+  makeBiggerElem.onclick = (evt) => {
+    evt.preventDefault();
+    if (Number(inputOfScale.value.replace(/\D/g, '')) < 100) {
+      inputOfScale.value = `${
+        Number(inputOfScale.value.replace(/\D/g, '')) + 25
+      }%`;
+      imgFromFormElem.style.transform = `scale(${inputOfScale.value})`;
+    }
+  };
 
   document.onkeydown = (evt) => {
     evt.preventDefault();
     if (evt.code === ESC_BUTTON_CODE) {
       formEditedImgElem.classList.add('hidden');
       document.body.classList.remove('modal-open');
+      loadImgElem.value = '';
+      imgFromFormElem.style.transform = 'scale(1)';
+      inputOfScale.value = '100%';
     }
   };
 
@@ -18,6 +67,9 @@ const editorForm = () => {
     evt.preventDefault();
     formEditedImgElem.classList.add('hidden');
     document.body.classList.remove('modal-open');
+    loadImgElem.value = '';
+    imgFromFormElem.style.transform = 'scale(1)';
+    inputOfScale.value = '100%';
   };
 
   loadImgElem.onchange = (evt) => {
