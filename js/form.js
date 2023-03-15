@@ -1,4 +1,8 @@
 const editorForm = () => {
+  const ESC_BUTTON_CODE = 'Escape';
+  const COUNT_OF_SYMBOLS_TEXTAREA = 140;
+  const STEP_25 = 25;
+  const STEP_100 = 100;
   const loadImgElem = document.querySelector('#upload-file');
   const formEditedImgElem = document.querySelector('.img-upload__overlay');
   const imgFromFormElem = formEditedImgElem.querySelector('img');
@@ -19,7 +23,6 @@ const editorForm = () => {
     '.img-upload__submit'
   );
   const commentAreaElem = formEditedImgElem.querySelector('.text__description');
-  const ESC_BUTTON_CODE = 27;
 
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
 
@@ -43,7 +46,7 @@ const editorForm = () => {
   };
 
   commentAreaElem.oninput = (evt) => {
-    if (evt.target.value.length <= 140) {
+    if (evt.target.value.length <= COUNT_OF_SYMBOLS_TEXTAREA) {
       buttonSubmitElem.disabled = false;
     } else {
       buttonSubmitElem.disabled = true;
@@ -54,9 +57,9 @@ const editorForm = () => {
 
   makeSmallerElem.onclick = (evt) => {
     evt.preventDefault();
-    if (Number(inputOfScale.value.replace(/\D/g, '')) - 25 > 0) {
+    if (Number(inputOfScale.value.replace(/\D/g, '')) - STEP_25 > 0) {
       inputOfScale.value = `${
-        Number(inputOfScale.value.replace(/\D/g, '')) - 25
+        Number(inputOfScale.value.replace(/\D/g, '')) - STEP_25
       }%`;
       imgFromFormElem.style.transform = `scale(${inputOfScale.value})`;
     }
@@ -64,9 +67,9 @@ const editorForm = () => {
 
   makeBiggerElem.onclick = (evt) => {
     evt.preventDefault();
-    if (Number(inputOfScale.value.replace(/\D/g, '')) < 100) {
+    if (Number(inputOfScale.value.replace(/\D/g, '')) < STEP_25) {
       inputOfScale.value = `${
-        Number(inputOfScale.value.replace(/\D/g, '')) + 25
+        Number(inputOfScale.value.replace(/\D/g, '')) + STEP_100
       }%`;
       imgFromFormElem.style.transform = `scale(${inputOfScale.value})`;
     }
@@ -74,7 +77,7 @@ const editorForm = () => {
 
   document.onkeydown = (evt) => {
     if (
-      evt.keyCode === ESC_BUTTON_CODE &&
+      evt.key === ESC_BUTTON_CODE &&
       evt.target.className !== 'text__hashtags' &&
       evt.target.className !== 'text__description'
     ) {
@@ -102,7 +105,7 @@ const editorForm = () => {
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      imgFromFormElem.src = fileReader.result;
+      imgFromFormElem.src = `${fileReader.result}`;
       allPicksElem.forEach((elem) => {
         elem.style.backgroundImage = `url(${fileReader.result})`;
       });
