@@ -18,6 +18,7 @@ const editorForm = () => {
   const buttonSubmitElem = formEditedImgElem.querySelector(
     '.img-upload__submit'
   );
+  const commentAreaElem = formEditedImgElem.querySelector('.text__description');
   const ESC_BUTTON_CODE = 27;
 
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
@@ -40,6 +41,14 @@ const editorForm = () => {
       }, 0);
 
     if (pristine.validate() && countOfCages <= 5) {
+      buttonSubmitElem.disabled = false;
+    } else {
+      buttonSubmitElem.disabled = true;
+    }
+  };
+
+  commentAreaElem.oninput = (evt) => {
+    if (evt.target.value.length < 140) {
       buttonSubmitElem.disabled = false;
     } else {
       buttonSubmitElem.disabled = true;
@@ -71,7 +80,8 @@ const editorForm = () => {
   document.onkeydown = (evt) => {
     if (
       evt.keyCode === ESC_BUTTON_CODE &&
-      evt.target.className !== 'text__hashtags'
+      evt.target.className !== 'text__hashtags' &&
+      evt.target.className !== 'text__description'
     ) {
       formEditedImgElem.classList.add('hidden');
       document.body.classList.remove('modal-open');
