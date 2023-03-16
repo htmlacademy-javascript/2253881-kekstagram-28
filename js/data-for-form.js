@@ -25,3 +25,13 @@ export const buttonSubmitElem = formEditedImgElem.querySelector(
 );
 export const commentAreaElem =
   formEditedImgElem.querySelector('.text__description');
+
+export const effectRadioButtonsElems =
+  formEditedImgElem.querySelectorAll('.effects__radio');
+
+export const sliderContainerElem = formEditedImgElem.querySelector(
+  '.effect-level__slider'
+);
+export const containerForInputSlider = formEditedImgElem.querySelector(
+  '.img-upload__effect-level'
+);

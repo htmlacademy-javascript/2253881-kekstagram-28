@@ -15,6 +15,9 @@ import {
   inputHashtagElem,
   buttonSubmitElem,
   commentAreaElem,
+  effectRadioButtonsElems,
+  sliderContainerElem,
+  containerForInputSlider,
 } from './data-for-form.js';
 
 const editorForm = () => {
@@ -25,12 +28,20 @@ const editorForm = () => {
     return regexp.test(val) || val === '';
   };
 
+  const clearOnClose = () => {
+    formEditedImgElem.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    loadImgElem.value = '';
+    imgFromFormElem.style.transform = 'scale(1)';
+    inputOfScale.value = '100%';
+    effectRadioButtonsElems[0].checked = true;
+    imgFromFormElem.className = '';
+    containerForInputSlider.classList.add('hidden');
+  };
+
   pristine.addValidator(inputHashtagElem, validateHashTag);
 
   inputHashtagElem.oninput = () => {
-    // const countOfCages = inputHashtagElem.value
-    //   .split('')
-    //   .reduce((acc, elem) => (elem === '#' ? (acc += 1) : acc), 0);
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
     if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
       buttonSubmitElem.disabled = false;
@@ -75,21 +86,13 @@ const editorForm = () => {
       evt.target.className !== 'text__hashtags' &&
       evt.target.className !== 'text__description'
     ) {
-      formEditedImgElem.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      loadImgElem.value = '';
-      imgFromFormElem.style.transform = 'scale(1)';
-      inputOfScale.value = '100%';
+      clearOnClose();
     }
   };
 
   closeFormElem.onclick = (evt) => {
     evt.preventDefault();
-    formEditedImgElem.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    loadImgElem.value = '';
-    imgFromFormElem.style.transform = 'scale(1)';
-    inputOfScale.value = '100%';
+    clearOnClose();
   };
 
   loadImgElem.onchange = (evt) => {
@@ -107,6 +110,94 @@ const editorForm = () => {
 
     fileReader.readAsDataURL(evt.target.files[0]);
   };
+
+  // sliderContainerElem.classList.add('hidden');
+  noUiSlider.create(sliderContainerElem, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 100,
+  });
+
+  effectRadioButtonsElems.forEach((elem) => {
+    elem.onchange = (evt) => {
+      imgFromFormElem.className = '';
+      imgFromFormElem.classList.add(`effects__preview--${evt.target.value}`);
+
+      if (
+        evt.target.value !== 'none' &&
+        containerForInputSlider.classList.contains('hidden')
+      ) {
+        containerForInputSlider.classList.remove('hidden');
+      }
+
+      switch (evt.target.value) {
+        case 'chrome': {
+          sliderContainerElem.noUiSlider.updateOptions({
+            range: {
+              min: 0,
+              max: 1,
+            },
+            start: 1,
+            step: 0.1,
+          });
+          break;
+        }
+
+        case 'sepia': {
+          sliderContainerElem.noUiSlider.updateOptions({
+            range: {
+              min: 0,
+              max: 1,
+            },
+            start: 1,
+            step: 0.1,
+          });
+          break;
+        }
+        case 'marvin': {
+          sliderContainerElem.noUiSlider.updateOptions({
+            range: {
+              min: 0,
+              max: 100,
+            },
+            start: 100,
+            step: 1,
+          });
+
+          break;
+        }
+        case 'phobos': {
+          sliderContainerElem.noUiSlider.updateOptions({
+            range: {
+              min: 0,
+              max: 3,
+            },
+            start: 3,
+            step: 0.1,
+          });
+          break;
+        }
+        case 'heat': {
+          sliderContainerElem.noUiSlider.updateOptions({
+            range: {
+              min: 1,
+              max: 3,
+            },
+            start: 3,
+            step: 0.1,
+          });
+          break;
+        }
+        default: {
+          console.log('default');
+          containerForInputSlider.classList.add('hidden');
+          break;
+        }
+      }
+    };
+  });
 };
 
 export default editorForm;
