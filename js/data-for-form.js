@@ -35,3 +35,13 @@ export const sliderContainerElem = formEditedImgElem.querySelector(
 export const containerForInputSlider = formEditedImgElem.querySelector(
   '.img-upload__effect-level'
 );
+
+export const valueOfSlider = formEditedImgElem.querySelector(
+  '.effect-level__value'
+);
+
+export const CHROME = 'grayscale';
+export const SEPIA = 'sepia';
+export const MARVIN = 'invert';
+export const PHOBOS = 'blur';
+export const HEAT = 'brightness';

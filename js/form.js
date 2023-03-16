@@ -18,6 +18,12 @@ import {
   effectRadioButtonsElems,
   sliderContainerElem,
   containerForInputSlider,
+  valueOfSlider,
+  CHROME,
+  SEPIA,
+  MARVIN,
+  PHOBOS,
+  HEAT,
 } from './data-for-form.js';
 
 const editorForm = () => {
@@ -37,6 +43,7 @@ const editorForm = () => {
     effectRadioButtonsElems[0].checked = true;
     imgFromFormElem.className = '';
     containerForInputSlider.classList.add('hidden');
+    imgFromFormElem.style.filter = '';
   };
 
   pristine.addValidator(inputHashtagElem, validateHashTag);
@@ -142,6 +149,9 @@ const editorForm = () => {
             start: 1,
             step: 0.1,
           });
+          // imgFromFormElem.style.filter = '';
+          imgFromFormElem.style.filter = `${CHROME}(1)`;
+
           break;
         }
 
@@ -154,6 +164,8 @@ const editorForm = () => {
             start: 1,
             step: 0.1,
           });
+          // imgFromFormElem.style.filter = '';
+          imgFromFormElem.style.filter = `${SEPIA}(1)`;
           break;
         }
         case 'marvin': {
@@ -165,7 +177,8 @@ const editorForm = () => {
             start: 100,
             step: 1,
           });
-
+          // imgFromFormElem.style.filter = '';
+          imgFromFormElem.style.filter = `${MARVIN}(100%)`;
           break;
         }
         case 'phobos': {
@@ -177,6 +190,8 @@ const editorForm = () => {
             start: 3,
             step: 0.1,
           });
+          imgFromFormElem.style.filter = `${PHOBOS}(3px)`;
+
           break;
         }
         case 'heat': {
@@ -188,15 +203,51 @@ const editorForm = () => {
             start: 3,
             step: 0.1,
           });
+          imgFromFormElem.style.filter = `${HEAT}(3)`;
+
           break;
         }
         default: {
-          console.log('default');
+          imgFromFormElem.style.filter = '';
           containerForInputSlider.classList.add('hidden');
           break;
         }
       }
     };
+  });
+
+  sliderContainerElem.noUiSlider.on('update', () => {
+    valueOfSlider.value = sliderContainerElem.noUiSlider.get();
+
+    effectRadioButtonsElems.forEach((elem) => {
+      if (elem.checked === true) {
+        switch (elem.value) {
+          case 'chrome': {
+            imgFromFormElem.style.filter = `${CHROME}(${valueOfSlider.value})`;
+            break;
+          }
+          case 'sepia': {
+            imgFromFormElem.style.filter = `${SEPIA}(${valueOfSlider.value})`;
+            break;
+          }
+          case 'marvin': {
+            imgFromFormElem.style.filter = `${MARVIN}(${valueOfSlider.value}%)`;
+            break;
+          }
+          case 'phobos': {
+            imgFromFormElem.style.filter = `${PHOBOS}(${valueOfSlider.value}px)`;
+            break;
+          }
+          case 'heat': {
+            imgFromFormElem.style.filter = `${HEAT}(${valueOfSlider.value})`;
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    });
   });
 };
 
