@@ -3,6 +3,11 @@ export const COUNT_OF_SYMBOLS_TEXTAREA = 140;
 export const STEP_25 = 25;
 export const STEP_100 = 100;
 export const COUNT_FOR_CAGES = 5;
+export const CHROME = 'grayscale';
+export const SEPIA = 'sepia';
+export const MARVIN = 'invert';
+export const PHOBOS = 'blur';
+export const HEAT = 'brightness';
 export const loadImgElem = document.querySelector('#upload-file');
 export const formEditedImgElem = document.querySelector('.img-upload__overlay');
 export const imgFromFormElem = formEditedImgElem.querySelector('img');
@@ -25,3 +30,17 @@ export const buttonSubmitElem = formEditedImgElem.querySelector(
 );
 export const commentAreaElem =
   formEditedImgElem.querySelector('.text__description');
+
+export const effectRadioButtonsElems =
+  formEditedImgElem.querySelectorAll('.effects__radio');
+
+export const sliderContainerElem = formEditedImgElem.querySelector(
+  '.effect-level__slider'
+);
+export const containerForInputSlider = formEditedImgElem.querySelector(
+  '.img-upload__effect-level'
+);
+
+export const valueOfSlider = formEditedImgElem.querySelector(
+  '.effect-level__value'
+);
