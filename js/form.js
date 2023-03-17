@@ -50,19 +50,14 @@ const editorForm = () => {
 
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
-    if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
-      buttonSubmitElem.disabled = false;
-    } else {
-      buttonSubmitElem.disabled = true;
-    }
+    buttonSubmitElem.disabled = !(
+      pristine.validate() && countOfCages <= COUNT_FOR_CAGES
+    );
   };
 
   commentAreaElem.oninput = (evt) => {
-    if (evt.target.value.length <= COUNT_OF_SYMBOLS_TEXTAREA) {
-      buttonSubmitElem.disabled = false;
-    } else {
-      buttonSubmitElem.disabled = true;
-    }
+    buttonSubmitElem.disabled =
+      evt.target.value.length > COUNT_OF_SYMBOLS_TEXTAREA;
   };
 
   imgFromFormElem.style.transform = 'scale(1)';
