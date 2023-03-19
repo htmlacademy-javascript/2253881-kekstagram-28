@@ -18,6 +18,9 @@ export const allPicksElem =
 export const makeSmallerElem = formEditedImgElem.querySelector(
   '.scale__control--smaller'
 );
+
+export const succesElem = document.querySelector('#success').content;
+export const errorElem = document.querySelector('#error').content;
 export const makeBiggerElem = formEditedImgElem.querySelector(
   '.scale__control--bigger'
 );
