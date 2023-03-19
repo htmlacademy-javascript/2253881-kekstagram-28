@@ -61,14 +61,26 @@ const editorForm = () => {
 
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
-    buttonSubmitElem.disabled = !(
-      pristine.validate() && countOfCages <= COUNT_FOR_CAGES
-    );
+    // buttonSubmitElem.disabled = !(
+    //   pristine.validate() && countOfCages <= COUNT_FOR_CAGES
+    // );
+    if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
+      buttonSubmitElem.disabled = false;
+      inputHashtagElem.style.backgroundColor = 'white';
+    } else {
+      inputHashtagElem.style.backgroundColor = '#DC143C';
+      buttonSubmitElem.disabled = true;
+    }
   };
 
   commentAreaElem.oninput = (evt) => {
-    buttonSubmitElem.disabled =
-      evt.target.value.length > COUNT_OF_SYMBOLS_TEXTAREA;
+    if (evt.target.value.length > COUNT_OF_SYMBOLS_TEXTAREA) {
+      buttonSubmitElem.disabled = true;
+      commentAreaElem.style.backgroundColor = '#DC143C';
+    } else {
+      buttonSubmitElem.disabled = false;
+      commentAreaElem.style.backgroundColor = 'white';
+    }
   };
 
   imgFromFormElem.style.transform = 'scale(1)';

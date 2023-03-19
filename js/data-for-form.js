@@ -48,3 +48,4 @@ export const containerForInputSlider = formEditedImgElem.querySelector(
 export const valueOfSlider = formEditedImgElem.querySelector(
   '.effect-level__value'
 );
+export const errorWindowElem = document.querySelector('#window-error');
