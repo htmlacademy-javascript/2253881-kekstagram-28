@@ -8,6 +8,7 @@ export const SEPIA = 'sepia';
 export const MARVIN = 'invert';
 export const PHOBOS = 'blur';
 export const HEAT = 'brightness';
+export const formElem = document.querySelector('.img-upload__form');
 export const loadImgElem = document.querySelector('#upload-file');
 export const formEditedImgElem = document.querySelector('.img-upload__overlay');
 export const imgFromFormElem = formEditedImgElem.querySelector('img');

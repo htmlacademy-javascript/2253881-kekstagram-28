@@ -1,7 +1,6 @@
-import arrOfSmth from './utils.js';
 import renderFullPick from './render-full-pick.js';
 
-const renderPicksIntoWindow = () => {
+export const renderPicksOnOk = (arrOfSmth) => {
   const templatePicElem = document
     .querySelector('#picture')
     .content.querySelector('.picture');
@@ -25,4 +24,11 @@ const renderPicksIntoWindow = () => {
   windowToRenderPicksElem.append(fragmentForPicsElem);
 };
 
-export default renderPicksIntoWindow;
+export const renderPicksOnError = (errorMessage) => {
+  const errorWindowElem = document.querySelector('#window-error');
+  errorWindowElem.children[0].textContent = errorMessage;
+  errorWindowElem.classList.remove('hidden');
+  setTimeout(() => {
+    errorWindowElem.classList.add('hidden');
+  }, 3000);
+};

@@ -19,12 +19,19 @@ import {
   sliderContainerElem,
   containerForInputSlider,
   valueOfSlider,
+  formElem,
   CHROME,
   SEPIA,
   MARVIN,
   PHOBOS,
   HEAT,
 } from './data-for-form.js';
+
+const statusLoad = {
+  loading: 'Загрузка...',
+  error: 'Ошибка загрузки!',
+  onload: 'Загрузка завершена успешно!',
+};
 
 const editorForm = () => {
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
@@ -244,6 +251,49 @@ const editorForm = () => {
       }
     });
   });
+
+  formElem.onsubmit = (evt) => {
+    evt.preventDefault();
+
+    const errorElem = document.querySelector('#window-error');
+    errorElem.classList.remove('hidden');
+    errorElem.children[0].textContent = 'Загрузка...';
+    errorElem.style.backgroundColor = 'green';
+    errorElem.style.color = 'white';
+    buttonSubmitElem.disabled = true;
+
+    const data = new FormData(evt.target);
+
+    fetch('https://28.javascript.pages.academy/kekstagram', {
+      method: 'POST',
+      // headers: {
+      //   'Content-type': 'multipart/form-data',
+      // },
+      body: data,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(statusLoad.error);
+        }
+        return res.json();
+      })
+      // eslint-disable-next-line
+      .then((loadedData) => {
+        // console.log(loadedData);
+        errorElem.children[0].textContent = statusLoad.onload;
+      })
+      .catch((err) => {
+        errorElem.style.backgroundColor = 'red';
+        errorElem.children[0].textContent = err;
+      })
+      .finally(() => {
+        setTimeout(() => {
+          buttonSubmitElem.disabled = false;
+          errorElem.classList.add('hidden');
+          errorElem.style.backgroundColor = 'red';
+        }, 3000);
+      });
+  };
 };
 
 export default editorForm;
