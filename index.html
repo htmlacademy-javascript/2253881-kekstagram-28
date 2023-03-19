@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./vendor/nouislider/nouislider.css" />
 
     <title>Кекстаграм</title>
   </head>
@@ -59,6 +60,7 @@
               method="post"
               enctype="multipart/form-data"
               autocomplete="off"
+              action="https://28.javascript.pages.academy/kekstagram"
             >
               <!-- Изначальное состояние поля для загрузки изображения -->
               <fieldset class="img-upload__start">
@@ -67,6 +69,7 @@
                   id="upload-file"
                   class="img-upload__input visually-hidden"
                   name="filename"
+                  accept="image/jpeg, image/png, image/jpg"
                   required
                 />
                 <label
@@ -91,7 +94,7 @@
                       <input
                         type="text"
                         class="scale__control scale__control--value"
-                        value="55%"
+                        value="100%"
                         title="Image Scale"
                         name="scale"
                         readonly
@@ -113,7 +116,9 @@
                     </div>
 
                     <!-- Изменение глубины эффекта, накладываемого на изображение -->
-                    <fieldset class="img-upload__effect-level effect-level">
+                    <fieldset
+                      class="img-upload__effect-level effect-level hidden"
+                    >
                       <input
                         class="effect-level__value"
                         type="number"
@@ -454,6 +459,8 @@
       </div>
     </template>
   </body>
+  <script src="./vendor/pristine/pristine.min.js"></script>
+  <script src="./vendor/nouislider/nouislider.js"></script>
   <script src="./js/functions.js"></script>
   <script src="./js/main.js" type="module"></script>
 </html>
