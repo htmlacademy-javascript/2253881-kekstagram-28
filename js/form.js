@@ -3,6 +3,7 @@ import {
   COUNT_OF_SYMBOLS_TEXTAREA,
   STEP_100,
   STEP_25,
+  URL,
   COUNT_FOR_CAGES,
   loadImgElem,
   formEditedImgElem,
@@ -281,7 +282,7 @@ const editorForm = () => {
     evt.preventDefault();
     const data = new FormData(evt.target);
 
-    fetch('https://28.javascript.pages.academy/kekstagram', {
+    fetch(URL, {
       method: METHODS.post,
       body: data,
     })
