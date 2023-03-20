@@ -8,6 +8,12 @@ export const SEPIA = 'sepia';
 export const MARVIN = 'invert';
 export const PHOBOS = 'blur';
 export const HEAT = 'brightness';
+export const METHODS = {
+  post: 'POST',
+  get: 'GET',
+};
+export const URL = 'https://28.javascript.pages.academy/kekstagram';
+export const formElem = document.querySelector('.img-upload__form');
 export const loadImgElem = document.querySelector('#upload-file');
 export const formEditedImgElem = document.querySelector('.img-upload__overlay');
 export const imgFromFormElem = formEditedImgElem.querySelector('img');
@@ -17,6 +23,9 @@ export const allPicksElem =
 export const makeSmallerElem = formEditedImgElem.querySelector(
   '.scale__control--smaller'
 );
+
+export const succesElem = document.querySelector('#success').content;
+export const errorElem = document.querySelector('#error').content;
 export const makeBiggerElem = formEditedImgElem.querySelector(
   '.scale__control--bigger'
 );
@@ -44,3 +53,4 @@ export const containerForInputSlider = formEditedImgElem.querySelector(
 export const valueOfSlider = formEditedImgElem.querySelector(
   '.effect-level__value'
 );
+export const errorWindowElem = document.querySelector('#window-error');

@@ -3,6 +3,7 @@ import {
   COUNT_OF_SYMBOLS_TEXTAREA,
   STEP_100,
   STEP_25,
+  URL,
   COUNT_FOR_CAGES,
   loadImgElem,
   formEditedImgElem,
@@ -19,12 +20,22 @@ import {
   sliderContainerElem,
   containerForInputSlider,
   valueOfSlider,
+  formElem,
+  succesElem,
+  errorElem,
   CHROME,
   SEPIA,
   MARVIN,
   PHOBOS,
   HEAT,
+  METHODS,
 } from './data-for-form.js';
+
+const statusLoad = {
+  loading: 'Загрузка...',
+  error: 'Ошибка загрузки!',
+  onload: 'Загрузка завершена успешно!',
+};
 
 const editorForm = () => {
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
@@ -44,20 +55,32 @@ const editorForm = () => {
     imgFromFormElem.className = '';
     containerForInputSlider.classList.add('hidden');
     imgFromFormElem.style.filter = '';
+    inputHashtagElem.value = '';
+    commentAreaElem.value = '';
   };
 
   pristine.addValidator(inputHashtagElem, validateHashTag);
 
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
-    buttonSubmitElem.disabled = !(
-      pristine.validate() && countOfCages <= COUNT_FOR_CAGES
-    );
+
+    if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
+      buttonSubmitElem.disabled = false;
+      inputHashtagElem.style.backgroundColor = 'white';
+    } else {
+      inputHashtagElem.style.backgroundColor = '#DC143C';
+      buttonSubmitElem.disabled = true;
+    }
   };
 
   commentAreaElem.oninput = (evt) => {
-    buttonSubmitElem.disabled =
-      evt.target.value.length > COUNT_OF_SYMBOLS_TEXTAREA;
+    if (evt.target.value.length > COUNT_OF_SYMBOLS_TEXTAREA) {
+      buttonSubmitElem.disabled = true;
+      commentAreaElem.style.backgroundColor = '#DC143C';
+    } else {
+      buttonSubmitElem.disabled = false;
+      commentAreaElem.style.backgroundColor = 'white';
+    }
   };
 
   imgFromFormElem.style.transform = 'scale(1)';
@@ -83,12 +106,23 @@ const editorForm = () => {
   };
 
   document.onkeydown = (evt) => {
-    if (
-      evt.key === ESC_BUTTON_CODE &&
-      evt.target.className !== 'text__hashtags' &&
-      evt.target.className !== 'text__description'
-    ) {
-      clearOnClose();
+    if (evt.key === ESC_BUTTON_CODE) {
+      if (document.querySelector('.success')) {
+        document.querySelector('.success').remove();
+        clearOnClose();
+      }
+
+      if (
+        evt.target.className !== 'text__hashtags' &&
+        evt.target.className !== 'text__description' &&
+        document.querySelector('.error') === null
+      ) {
+        clearOnClose();
+      }
+
+      if (document.querySelector('.error')) {
+        document.querySelector('.error').remove();
+      }
     }
   };
 
@@ -113,7 +147,6 @@ const editorForm = () => {
     fileReader.readAsDataURL(evt.target.files[0]);
   };
 
-  // sliderContainerElem.classList.add('hidden');
   noUiSlider.create(sliderContainerElem, {
     range: {
       min: 0,
@@ -144,7 +177,7 @@ const editorForm = () => {
             start: 1,
             step: 0.1,
           });
-          // imgFromFormElem.style.filter = '';
+
           imgFromFormElem.style.filter = `${CHROME}(1)`;
 
           break;
@@ -159,7 +192,7 @@ const editorForm = () => {
             start: 1,
             step: 0.1,
           });
-          // imgFromFormElem.style.filter = '';
+
           imgFromFormElem.style.filter = `${SEPIA}(1)`;
           break;
         }
@@ -172,7 +205,7 @@ const editorForm = () => {
             start: 100,
             step: 1,
           });
-          // imgFromFormElem.style.filter = '';
+
           imgFromFormElem.style.filter = `${MARVIN}(100%)`;
           break;
         }
@@ -244,6 +277,59 @@ const editorForm = () => {
       }
     });
   });
+
+  formElem.onsubmit = (evt) => {
+    evt.preventDefault();
+    const data = new FormData(evt.target);
+
+    fetch(URL, {
+      method: METHODS.post,
+      body: data,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(statusLoad.error);
+        }
+        return res.json();
+      })
+      // eslint-disable-next-line
+      .then((loadedData) => {
+        const cloneOnSuccesElem = succesElem
+          .querySelector('section')
+          .cloneNode(true);
+        // eslint-disable-next-line
+        cloneOnSuccesElem.onclick = (evt) => {
+          if (
+            evt.target.className === 'success' ||
+            evt.target.className === 'success__button'
+          ) {
+            document.body.querySelector('.success').remove();
+            clearOnClose();
+          }
+        };
+
+        document.body.insertAdjacentElement('beforeend', cloneOnSuccesElem);
+      })
+      // eslint-disable-next-line
+      .catch((err) => {
+        const cloneOnErrorElem = errorElem
+          .querySelector('section')
+          .cloneNode(true);
+        // eslint-disable-next-line
+        cloneOnErrorElem.onclick = (evt) => {
+          if (
+            evt.target.className === 'error' ||
+            evt.target.className === 'error__button'
+          ) {
+            document.body.querySelector('.error').remove();
+          }
+        };
+        document.body.insertAdjacentElement('beforeend', cloneOnErrorElem);
+      })
+      .finally(() => {
+        buttonSubmitElem.disabled = false;
+      });
+  };
 };
 
 export default editorForm;

@@ -25,12 +25,16 @@ const renderFullPick = (evt, mainPickElem) => {
     fullPickWindowElem.querySelector('.social__comments');
   windowForCommentsElem.innerHTML = '';
 
+  if (comments.length < counterLoader) {
+    buttomLoadMoarCommentsElem.classList.add('hidden');
+  } else {
+    buttomLoadMoarCommentsElem.classList.remove('hidden');
+  }
+
   // eslint-disable-next-line
   const loaderComments = (evt) => {
     evt.preventDefault();
-    if (comments.length + STEP < counterLoader) {
-      return;
-    }
+
     counterLoader += STEP;
     loadedArrayOfComments = comments.slice(0, counterLoader);
     windowForCommentsElem.innerHTML = '';
@@ -42,6 +46,9 @@ const renderFullPick = (evt, mainPickElem) => {
       windowForCommentsElem.append(cloneOfCommentElem);
     });
     commetsCounterElem.innerHTML = `${loadedArrayOfComments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
+    if (comments.length <= counterLoader) {
+      buttomLoadMoarCommentsElem.classList.add('hidden');
+    }
   };
 
   // eslint-disable-next-line
