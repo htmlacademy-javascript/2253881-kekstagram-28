@@ -3,12 +3,8 @@
 import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
 import editorForm from './form.js';
 import downloadData from './download-data.js';
-
+const url = 'https://28.javascript.pages.academy/kekstagram/data';
 // renderPicksIntoWindow();
-downloadData(
-  renderPicksOnOk,
-  renderPicksOnError,
-  'https://28.javascript.pages.academy/kekstagram/data'
-);
+downloadData(renderPicksOnOk, renderPicksOnError, url);
 
 editorForm();
