@@ -1,7 +1,15 @@
+const STATUS_CODES_MIN_MAX = {
+  MIN: 200,
+  MAX: 300,
+};
+
 const downloadData = async (onOk, onError, url) =>
   await fetch(url)
     .then((res) => {
-      if (res.status >= 200 && res.status < 300) {
+      if (
+        res.status >= STATUS_CODES_MIN_MAX.MIN &&
+        res.status < STATUS_CODES_MIN_MAX.MAX
+      ) {
         return res.json();
       } else {
         throw new Error(res.statusText);

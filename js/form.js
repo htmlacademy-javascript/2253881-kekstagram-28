@@ -61,9 +61,7 @@ const editorForm = () => {
 
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
-    // buttonSubmitElem.disabled = !(
-    //   pristine.validate() && countOfCages <= COUNT_FOR_CAGES
-    // );
+
     if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
       buttonSubmitElem.disabled = false;
       inputHashtagElem.style.backgroundColor = 'white';
@@ -280,21 +278,10 @@ const editorForm = () => {
 
   formElem.onsubmit = (evt) => {
     evt.preventDefault();
-
-    // const errorElem = document.querySelector('#window-error');
-    // errorElem.classList.remove('hidden');
-    // errorElem.children[0].textContent = 'Загрузка...';
-    // errorElem.style.backgroundColor = 'green';
-    // errorElem.style.color = 'white';
-    // buttonSubmitElem.disabled = true;
-
     const data = new FormData(evt.target);
 
     fetch('https://28.javascript.pages.academy/kekstagram', {
       method: 'POST',
-      // headers: {
-      //   'Content-type': 'multipart/form-data',
-      // },
       body: data,
     })
       .then((res) => {
@@ -305,8 +292,6 @@ const editorForm = () => {
       })
       // eslint-disable-next-line
       .then((loadedData) => {
-        //console.log(loadedData);
-        // errorElem.children[0].textContent = statusLoad.onload;
         const cloneOnSuccesElem = succesElem
           .querySelector('section')
           .cloneNode(true);
@@ -325,8 +310,6 @@ const editorForm = () => {
       })
       // eslint-disable-next-line
       .catch((err) => {
-        // errorElem.style.backgroundColor = 'red';
-        // errorElem.children[0].textContent = err;
         const cloneOnErrorElem = errorElem
           .querySelector('section')
           .cloneNode(true);
@@ -343,10 +326,6 @@ const editorForm = () => {
       })
       .finally(() => {
         buttonSubmitElem.disabled = false;
-        // setTimeout(() => {
-        //   errorElem.classList.add('hidden');
-        //   errorElem.style.backgroundColor = 'red';
-        // }, 3000);
       });
   };
 };
