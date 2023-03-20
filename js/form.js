@@ -27,6 +27,7 @@ import {
   MARVIN,
   PHOBOS,
   HEAT,
+  METHODS,
 } from './data-for-form.js';
 
 const statusLoad = {
@@ -281,7 +282,7 @@ const editorForm = () => {
     const data = new FormData(evt.target);
 
     fetch('https://28.javascript.pages.academy/kekstagram', {
-      method: 'POST',
+      method: METHODS.post,
       body: data,
     })
       .then((res) => {
