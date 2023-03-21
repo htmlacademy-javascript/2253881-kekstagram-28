@@ -28,7 +28,8 @@ export const renderPicksOnError = (errorMessage) => {
   const errorWindowElem = document.querySelector('#window-error');
   errorWindowElem.children[0].textContent = errorMessage;
   errorWindowElem.classList.remove('hidden');
-  setTimeout(() => {
+  // eslint-disable-next-line
+  const timer = setTimeout(() => {
     errorWindowElem.classList.add('hidden');
   }, 3000);
 };

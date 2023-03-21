@@ -31,10 +31,10 @@ import {
   METHODS,
 } from './data-for-form.js';
 
-const statusLoad = {
-  loading: 'Загрузка...',
-  error: 'Ошибка загрузки!',
-  onload: 'Загрузка завершена успешно!',
+const STATUS_LOAD = {
+  LOADING: 'Загрузка...',
+  ERROR: 'Ошибка загрузки!',
+  ONLOAD: 'Загрузка завершена успешно!',
 };
 
 const editorForm = () => {
@@ -64,7 +64,14 @@ const editorForm = () => {
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
 
-    if (pristine.validate() && countOfCages <= COUNT_FOR_CAGES) {
+    const countOfHash = inputHashtagElem.value.split(' ');
+    const diplicateChecker = countOfHash.length === new Set(countOfHash).size;
+
+    if (
+      pristine.validate() &&
+      countOfCages <= COUNT_FOR_CAGES &&
+      diplicateChecker
+    ) {
       buttonSubmitElem.disabled = false;
       inputHashtagElem.style.backgroundColor = 'white';
     } else {
@@ -288,12 +295,11 @@ const editorForm = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(statusLoad.error);
+          throw new Error(STATUS_LOAD.ERROR);
         }
         return res.json();
       })
-      // eslint-disable-next-line
-      .then((loadedData) => {
+      .then(() => {
         const cloneOnSuccesElem = succesElem
           .querySelector('section')
           .cloneNode(true);
@@ -310,8 +316,7 @@ const editorForm = () => {
 
         document.body.insertAdjacentElement('beforeend', cloneOnSuccesElem);
       })
-      // eslint-disable-next-line
-      .catch((err) => {
+      .catch(() => {
         const cloneOnErrorElem = errorElem
           .querySelector('section')
           .cloneNode(true);

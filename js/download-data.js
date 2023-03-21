@@ -3,8 +3,8 @@ const STATUS_CODES_MIN_MAX = {
   MAX: 300,
 };
 
-const downloadData = async (onOk, onError, url) =>
-  await fetch(url)
+const downloadData = (onOk, onError, url) =>
+  fetch(url)
     .then((res) => {
       if (
         res.status >= STATUS_CODES_MIN_MAX.MIN &&
@@ -19,4 +19,5 @@ const downloadData = async (onOk, onError, url) =>
     .catch((err) => {
       onError(err);
     });
+
 export default downloadData;
