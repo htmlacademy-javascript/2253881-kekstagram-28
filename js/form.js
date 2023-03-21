@@ -23,6 +23,7 @@ import {
   formElem,
   succesElem,
   errorElem,
+  FILE_TYPES,
   CHROME,
   SEPIA,
   MARVIN,
@@ -144,11 +145,16 @@ const editorForm = () => {
     document.body.classList.add('modal-open');
 
     const fileReader = new FileReader();
+
     fileReader.onload = () => {
-      imgFromFormElem.src = `${fileReader.result}`;
-      allPicksElem.forEach((elem) => {
-        elem.style.backgroundImage = `url(${fileReader.result})`;
-      });
+      const fName = evt.target.files[0].name.toLowerCase();
+      const matches = FILE_TYPES.some((elem) => fName.endsWith(elem));
+      if (matches) {
+        imgFromFormElem.src = `${fileReader.result}`;
+        allPicksElem.forEach((elem) => {
+          elem.style.backgroundImage = `url(${fileReader.result})`;
+        });
+      }
     };
 
     fileReader.readAsDataURL(evt.target.files[0]);
