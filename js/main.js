@@ -1,3 +1,6 @@
+import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
+import editorForm from './form.js';
+
 const URL = 'https://28.javascript.pages.academy/kekstagram/data';
 
 const STATUS_CODES_MIN_MAX = {
@@ -5,18 +8,7 @@ const STATUS_CODES_MIN_MAX = {
   MAX: 300,
 };
 
-import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
-import editorForm from './form.js';
-
-const debounce = (callback, timeoutDelay) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
-
-const downloadDatax = async () => {
+const downloadData = async () => {
   try {
     const res = await fetch(URL);
     if (
@@ -28,12 +20,12 @@ const downloadDatax = async () => {
     } else {
       throw res.statusText;
     }
-  } catch (e) {
-    renderPicksOnError(e);
+  } catch (error) {
+    renderPicksOnError(error);
   }
 };
 
-const data = await downloadDatax();
+const data = await downloadData();
 
 renderPicksOnOk(data);
 

@@ -4,6 +4,17 @@ const FILTERS = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
+const DELAY = 500;
+const DELAY_FOR_ERROR = 3000;
+
+//дебаунс
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 //отрисовка картинок в документ
 export const renderPicksIntoWindow = (arrOfPicks) => {
@@ -36,6 +47,8 @@ export const renderPicksIntoWindow = (arrOfPicks) => {
   const windowToRenderPicksElem = document.querySelector('.pictures');
   windowToRenderPicksElem.append(fragmentForPicsElem);
 };
+//ОтдебауУУУУШЕННАЯ рендерка картинок
+const debouncedRenderPicksIntoWindow = debounce(renderPicksIntoWindow, 500);
 
 //Рандомное число
 const getRandomArbitrary = (min, max) =>
@@ -63,7 +76,6 @@ const cleanerClassActiveButton = (buttonsArr, target) => {
   });
   target.target.classList.add('img-filters__button--active');
 };
-//debounce
 
 //основная функция
 export const renderPicksOnOk = (arrOfSmth) => {
@@ -73,26 +85,46 @@ export const renderPicksOnOk = (arrOfSmth) => {
   //--------
   const buttonsFilterElem = filterElem.querySelectorAll('button');
 
+  //отдельный обработчик навесил для отсутствия лагов в интерфейсе.
+
   buttonsFilterElem.forEach((elem) => {
-    elem.onclick = (evt) => {
+    elem.addEventListener('click', (evt) => {
       switch (evt.target.id) {
         case FILTERS.DEFAULT: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          renderPicksIntoWindow(arrOfSmth);
-
           break;
         }
 
         case FILTERS.RANDOM: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-
-          renderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
-
           break;
         }
         case FILTERS.DISCUSSED: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          renderPicksIntoWindow(
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    });
+  });
+
+  // отрисовка пикс под дибаунсом
+  buttonsFilterElem.forEach((elem) => {
+    elem.onclick = debounce((evt) => {
+      switch (evt.target.id) {
+        case FILTERS.DEFAULT: {
+          debouncedRenderPicksIntoWindow(arrOfSmth);
+          break;
+        }
+
+        case FILTERS.RANDOM: {
+          debouncedRenderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
+          break;
+        }
+        case FILTERS.DISCUSSED: {
+          debouncedRenderPicksIntoWindow(
             [...arrOfSmth].sort((a, b) => b.comments.length - a.comments.length)
           );
           break;
@@ -101,7 +133,7 @@ export const renderPicksOnOk = (arrOfSmth) => {
           break;
         }
       }
-    };
+    }, DELAY);
   });
   renderPicksIntoWindow(arrOfSmth);
 };
@@ -114,5 +146,5 @@ export const renderPicksOnError = (errorMessage) => {
   // eslint-disable-next-line
   const timer = setTimeout(() => {
     errorWindowElem.classList.add('hidden');
-  }, 3000);
+  }, DELAY_FOR_ERROR);
 };
