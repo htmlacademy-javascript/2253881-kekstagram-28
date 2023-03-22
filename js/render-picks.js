@@ -71,8 +71,6 @@ export const renderPicksOnOk = (arrOfSmth) => {
   filterElem.classList.remove('img-filters--inactive');
   const buttonsFilterElem = filterElem.querySelectorAll('button');
 
-  cutTenRandomElemsFromArr(arrOfSmth);
-
   buttonsFilterElem.forEach((elem) => {
     elem.onclick = (evt) => {
       switch (evt.target.id) {
@@ -104,28 +102,6 @@ export const renderPicksOnOk = (arrOfSmth) => {
     };
   });
   renderPicksIntoWindow(arrOfSmth);
-
-  // const templatePicElem = document
-  //   .querySelector('#picture')
-  //   .content.querySelector('.picture');
-
-  // const fragmentForPicsElem = document.createDocumentFragment();
-
-  // arrOfSmth.forEach((elem) => {
-  //   const cloneTemplateElem = templatePicElem.cloneNode(true);
-  //   cloneTemplateElem.children[0].src = elem.url;
-  //   cloneTemplateElem.children[0].alt = elem.description;
-  //   cloneTemplateElem.children[1].children[1].textContent = elem.likes;
-  //   cloneTemplateElem.children[1].children[0].textContent =
-  //     elem.comments.length;
-  //   cloneTemplateElem.addEventListener('click', (evt) =>
-  //     renderFullPick(evt, elem)
-  //   );
-  //   fragmentForPicsElem.append(cloneTemplateElem);
-  // });
-
-  // const windowToRenderPicksElem = document.querySelector('.pictures');
-  // windowToRenderPicksElem.append(fragmentForPicsElem);
 };
 
 //действия при ошибке загрузки картинок с сервера
