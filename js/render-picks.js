@@ -6,7 +6,7 @@ const FILTERS = {
 };
 
 //отрисовка картинок в документ
-const renderPicksIntoWindow = (arrOfPicks) => {
+export const renderPicksIntoWindow = (arrOfPicks) => {
   ////очистка картинок перед новым рендером
   const mainWindowPickElem = document.querySelector('.pictures');
   const picksElems = mainWindowPickElem.querySelectorAll('.picture');
@@ -19,7 +19,7 @@ const renderPicksIntoWindow = (arrOfPicks) => {
     .content.querySelector('.picture');
 
   const fragmentForPicsElem = document.createDocumentFragment();
-
+  //перебор массива с данными + рендер данных
   arrOfPicks.forEach((elem) => {
     const cloneTemplateElem = templatePicElem.cloneNode(true);
     cloneTemplateElem.children[0].src = elem.url;
@@ -42,7 +42,7 @@ const getRandomArbitrary = (min, max) =>
   Math.floor(Math.random() * (max - min) + min);
 
 //10 рандомных элементов из основного массива
-const cutTenRandomElemsFromArr = (arr) => {
+export const cutTenRandomElemsFromArr = (arr) => {
   const arrOfIndexs = [];
 
   for (let i = 0; i < 10; i++) {
@@ -56,33 +56,22 @@ const cutTenRandomElemsFromArr = (arr) => {
   return arrOfIndexs.map((elem) => arr[elem]);
 };
 
+//удаляет активный класс на клик и добавляет на тардет кнопку.
+const cleanerClassActiveButton = (buttonsArr, target) => {
+  buttonsArr.forEach((btn) => {
+    btn.classList.remove('img-filters__button--active');
+  });
+  target.target.classList.add('img-filters__button--active');
+};
+//debounce
+
 //основная функция
 export const renderPicksOnOk = (arrOfSmth) => {
+  //показываем верхнюю панель
   const filterElem = document.querySelector('.img-filters');
   filterElem.classList.remove('img-filters--inactive');
+  //--------
   const buttonsFilterElem = filterElem.querySelectorAll('button');
-
-  //удаляет активный класс на клик и добавляет на тардет кнопку.
-  const cleanerClassActiveButton = (buttonsArr, target) => {
-    buttonsArr.forEach((btn) => {
-      btn.classList.remove('img-filters__button--active');
-    });
-    target.target.classList.add('img-filters__button--active');
-  };
-
-  //делей для функций
-  function debounce_leading(func, timeout = 300) {
-    let timer;
-    return (...args) => {
-      if (!timer) {
-        func.apply(this, args);
-      }
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        timer = undefined;
-      }, timeout);
-    };
-  }
 
   buttonsFilterElem.forEach((elem) => {
     elem.onclick = (evt) => {
@@ -96,7 +85,7 @@ export const renderPicksOnOk = (arrOfSmth) => {
 
         case FILTERS.RANDOM: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          //ТУТ
+
           renderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
 
           break;
