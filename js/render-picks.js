@@ -7,6 +7,13 @@ const FILTERS = {
 
 //отрисовка картинок в документ
 const renderPicksIntoWindow = (arrOfPicks) => {
+  ////очистка картинок перед новым рендером
+  const mainWindowPickElem = document.querySelector('.pictures');
+  const picksElems = mainWindowPickElem.querySelectorAll('.picture');
+  picksElems.forEach((elem) => {
+    elem.remove();
+  });
+  //-----
   const templatePicElem = document
     .querySelector('#picture')
     .content.querySelector('.picture');
@@ -56,15 +63,6 @@ const cutTenRandomElemsFromArr = (arr) => {
   return arrOfIndexs.map((elem) => arr[elem]);
 };
 
-//очистка картинок перед новым рендером
-const cleaningBeforeRender = () => {
-  const mainWindowPickElem = document.querySelector('.pictures');
-  const picksElems = mainWindowPickElem.querySelectorAll('.picture');
-  picksElems.forEach((elem) => {
-    elem.remove();
-  });
-};
-
 //основная функция
 export const renderPicksOnOk = (arrOfSmth) => {
   const filterElem = document.querySelector('.img-filters');
@@ -76,20 +74,17 @@ export const renderPicksOnOk = (arrOfSmth) => {
       switch (evt.target.id) {
         case FILTERS.DEFAULT: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          cleaningBeforeRender();
           renderPicksIntoWindow(arrOfSmth);
           break;
         }
 
         case FILTERS.RANDOM: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          cleaningBeforeRender();
           renderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
           break;
         }
         case FILTERS.DISCUSSED: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          cleaningBeforeRender();
           renderPicksIntoWindow(
             [...arrOfSmth].sort((a, b) => b.comments.length - a.comments.length)
           );
