@@ -84,7 +84,7 @@ export const renderPicksOnOk = (arrOfSmth) => {
   //--------
   const buttonsFilterElem = filterElem.querySelectorAll('button');
 
-  // отрисовка пикс под дибаунсом
+  // отрисовка пикч под дибаунсом
   buttonsFilterElem.forEach((elem) => {
     elem.onclick = (evt) => {
       switch (evt.target.id) {
