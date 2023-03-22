@@ -5,6 +5,7 @@ const FILTERS = {
   DISCUSSED: 'filter-discussed',
 };
 const DELAY_FOR_ERROR = 3000;
+const MAIN_DELAY = 500;
 
 //дебаунс
 const debounce = (callback, timeoutDelay) => {
@@ -47,7 +48,10 @@ export const renderPicksIntoWindow = (arrOfPicks) => {
   windowToRenderPicksElem.append(fragmentForPicsElem);
 };
 //ОтдебауУУУУШЕННАЯ рендерка картинок
-const debouncedRenderPicksIntoWindow = debounce(renderPicksIntoWindow, 500);
+const debouncedRenderPicksIntoWindow = debounce(
+  renderPicksIntoWindow,
+  MAIN_DELAY
+);
 
 //Рандомное число
 const getRandomArbitrary = (min, max) =>
