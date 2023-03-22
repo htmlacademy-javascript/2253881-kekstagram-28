@@ -4,7 +4,6 @@ const FILTERS = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
-const DELAY = 500;
 const DELAY_FOR_ERROR = 3000;
 
 //дебаунс
@@ -85,45 +84,23 @@ export const renderPicksOnOk = (arrOfSmth) => {
   //--------
   const buttonsFilterElem = filterElem.querySelectorAll('button');
 
-  //отдельный обработчик навесил для отсутствия лагов в интерфейсе.
-
-  buttonsFilterElem.forEach((elem) => {
-    elem.addEventListener('click', (evt) => {
-      switch (evt.target.id) {
-        case FILTERS.DEFAULT: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
-          break;
-        }
-
-        case FILTERS.RANDOM: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
-          break;
-        }
-        case FILTERS.DISCUSSED: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    });
-  });
-
   // отрисовка пикс под дибаунсом
   buttonsFilterElem.forEach((elem) => {
-    elem.onclick = debounce((evt) => {
+    elem.onclick = (evt) => {
       switch (evt.target.id) {
         case FILTERS.DEFAULT: {
+          cleanerClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(arrOfSmth);
           break;
         }
 
         case FILTERS.RANDOM: {
+          cleanerClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
           break;
         }
         case FILTERS.DISCUSSED: {
+          cleanerClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(
             [...arrOfSmth].sort((a, b) => b.comments.length - a.comments.length)
           );
@@ -133,7 +110,7 @@ export const renderPicksOnOk = (arrOfSmth) => {
           break;
         }
       }
-    }, DELAY);
+    };
   });
   renderPicksIntoWindow(arrOfSmth);
 };
