@@ -43,7 +43,7 @@ const getRandomArbitrary = (min, max) =>
 
 //10 рандомных элементов из основного массива
 const cutTenRandomElemsFromArr = (arr) => {
-  let arrOfIndexs = [];
+  const arrOfIndexs = [];
 
   for (let i = 0; i < 10; i++) {
     let number = getRandomArbitrary(0, arr.length);
@@ -85,13 +85,16 @@ export const renderPicksOnOk = (arrOfSmth) => {
 
         case FILTERS.RANDOM: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
-          const tenArrElems = cutTenRandomElemsFromArr(arrOfSmth);
           cleaningBeforeRender();
-          renderPicksIntoWindow(tenArrElems);
+          renderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
           break;
         }
         case FILTERS.DISCUSSED: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
+          cleaningBeforeRender();
+          renderPicksIntoWindow(
+            [...arrOfSmth].sort((a, b) => b.comments.length - a.comments.length)
+          );
           break;
         }
         default: {
