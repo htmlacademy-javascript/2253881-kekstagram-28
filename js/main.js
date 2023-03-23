@@ -1,7 +1,7 @@
 import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
 import editorForm from './form.js';
 
-const URL = 'https://28.javascript.pages.academy/kekstagram/data';
+const URL_MAIN = 'https://28.javascript.pages.academy/kekstagram/data';
 
 const STATUS_CODES_MIN_MAX = {
   MIN: 200,
@@ -10,7 +10,7 @@ const STATUS_CODES_MIN_MAX = {
 
 const downloadData = async () => {
   try {
-    const res = await fetch(URL);
+    const res = await fetch(URL_MAIN);
     if (
       res.status >= STATUS_CODES_MIN_MAX.MIN &&
       res.status < STATUS_CODES_MIN_MAX.MAX

@@ -95,6 +95,7 @@ export const renderPicksOnOk = (arrOfSmth) => {
         case FILTERS.DEFAULT: {
           cleanerClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(arrOfSmth);
+
           break;
         }
 
