@@ -3,7 +3,6 @@ import {
   COUNT_OF_SYMBOLS_TEXTAREA,
   STEP_100,
   STEP_25,
-  URL_SEND,
   COUNT_FOR_CAGES,
   loadImgElem,
   formEditedImgElem,
@@ -30,41 +29,38 @@ import {
   PHOBOS,
   HEAT,
   METHODS,
+  STATUS_ERROR,
 } from './data-for-form.js';
+import { URLS } from './main.js';
 
-const STATUS_LOAD = {
-  LOADING: 'Загрузка...',
-  ERROR: 'Ошибка загрузки!',
-  ONLOAD: 'Загрузка завершена успешно!',
+//регулярка для валидация хештегов
+const validateHashTag = (val) => {
+  const regexp = /^(#[a-zа-яё0-9]{1,19}\s)*#[a-zа-яё0-9]{1,19}$/gi;
+  return regexp.test(val) || val === '';
 };
 
-const editorForm = () => {
+//очистка при закрытии формы
+const clearOnClose = () => {
+  formEditedImgElem.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  loadImgElem.value = '';
+  imgFromFormElem.style.transform = 'scale(1)';
+  inputOfScale.value = '100%';
+  effectRadioButtonsElems[0].checked = true;
+  imgFromFormElem.className = '';
+  containerForInputSlider.classList.add('hidden');
+  imgFromFormElem.style.filter = '';
+  inputHashtagElem.value = '';
+  commentAreaElem.value = '';
+};
+
+const editForm = () => {
   const pristine = new Pristine(document.querySelector('.img-upload__form'));
-
-  const validateHashTag = (val) => {
-    const regexp = /^(#[a-zа-яё0-9]{1,19}\s)*#[a-zа-яё0-9]{1,19}$/gi;
-    return regexp.test(val) || val === '';
-  };
-
-  const clearOnClose = () => {
-    formEditedImgElem.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    loadImgElem.value = '';
-    imgFromFormElem.style.transform = 'scale(1)';
-    inputOfScale.value = '100%';
-    effectRadioButtonsElems[0].checked = true;
-    imgFromFormElem.className = '';
-    containerForInputSlider.classList.add('hidden');
-    imgFromFormElem.style.filter = '';
-    inputHashtagElem.value = '';
-    commentAreaElem.value = '';
-  };
 
   pristine.addValidator(inputHashtagElem, validateHashTag);
 
   inputHashtagElem.oninput = () => {
     const countOfCages = inputHashtagElem.value.replace(/[^#]/g, '').length;
-
     const countOfHash = inputHashtagElem.value.split(' ');
     const diplicateChecker = countOfHash.length === new Set(countOfHash).size;
 
@@ -139,6 +135,7 @@ const editorForm = () => {
     clearOnClose();
   };
 
+  //после загрузки фотографии
   loadImgElem.onchange = (evt) => {
     evt.preventDefault();
     formEditedImgElem.classList.remove('hidden');
@@ -289,13 +286,13 @@ const editorForm = () => {
     evt.preventDefault();
     const data = new FormData(evt.target);
 
-    fetch(URL_SEND, {
+    fetch(URLS.URL_SEND, {
       method: METHODS.post,
       body: data,
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(STATUS_LOAD.ERROR);
+          throw new Error(STATUS_ERROR);
         }
         return res.json();
       })
@@ -337,4 +334,4 @@ const editorForm = () => {
   };
 };
 
-export default editorForm;
+export default editForm;

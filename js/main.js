@@ -1,7 +1,14 @@
 import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
-import editorForm from './form.js';
+import editForm from './form.js';
+import { loadImgElem } from './data-for-form.js';
+import { debouncing } from './render-picks.js';
 
-const URL_MAIN = 'https://28.javascript.pages.academy/kekstagram/data';
+const messageError = 'Нет смысла пытаться, ошибка сервера';
+
+export const URLS = {
+  URL_SEND: 'https://28.javascript.pages.academy/kekstagram',
+  URL_MAIN: 'https://28.javascript.pages.academy/kekstagram/data',
+};
 
 const STATUS_CODES_MIN_MAX = {
   MIN: 200,
@@ -10,7 +17,7 @@ const STATUS_CODES_MIN_MAX = {
 
 const downloadData = async () => {
   try {
-    const res = await fetch(URL_MAIN);
+    const res = await fetch(URLS.URL_MAIN);
     if (
       res.status >= STATUS_CODES_MIN_MAX.MIN &&
       res.status < STATUS_CODES_MIN_MAX.MAX
@@ -27,6 +34,12 @@ const downloadData = async () => {
 
 const data = await downloadData();
 
-renderPicksOnOk(data);
-
-editorForm();
+if (data !== undefined) {
+  renderPicksOnOk(data);
+  editForm();
+} else {
+  loadImgElem.type = 'button';
+  loadImgElem.onclick = debouncing(() => {
+    renderPicksOnError(messageError);
+  }, 500);
+}
