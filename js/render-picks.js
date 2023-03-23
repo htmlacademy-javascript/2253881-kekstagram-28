@@ -4,11 +4,14 @@ const FILTERS = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
-const DELAY_FOR_ERROR = 3000;
-const MAIN_DELAY = 500;
+
+const DELAY = {
+  MAIN: 500,
+  ERROR: 5000,
+};
 
 //дебаунс
-const debounce = (callback, timeoutDelay) => {
+export const debouncing = (callback, timeoutDelay) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
@@ -48,9 +51,9 @@ export const renderPicksIntoWindow = (arrOfPicks) => {
   windowToRenderPicksElem.append(fragmentForPicsElem);
 };
 //ОтдебауУУУУШЕННАЯ рендерка картинок
-const debouncedRenderPicksIntoWindow = debounce(
+const debouncedRenderPicksIntoWindow = debouncing(
   renderPicksIntoWindow,
-  MAIN_DELAY
+  DELAY.MAIN
 );
 
 //Рандомное число
@@ -73,7 +76,7 @@ export const cutTenRandomElemsFromArr = (arr) => {
 };
 
 //удаляет активный класс на клик и добавляет на тардет кнопку.
-const cleanerClassActiveButton = (buttonsArr, target) => {
+const clearClassActiveButton = (buttonsArr, target) => {
   buttonsArr.forEach((btn) => {
     btn.classList.remove('img-filters__button--active');
   });
@@ -93,19 +96,19 @@ export const renderPicksOnOk = (arrOfSmth) => {
     elem.onclick = (evt) => {
       switch (evt.target.id) {
         case FILTERS.DEFAULT: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
+          clearClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(arrOfSmth);
 
           break;
         }
 
         case FILTERS.RANDOM: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
+          clearClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(cutTenRandomElemsFromArr(arrOfSmth));
           break;
         }
         case FILTERS.DISCUSSED: {
-          cleanerClassActiveButton(buttonsFilterElem, evt);
+          clearClassActiveButton(buttonsFilterElem, evt);
           debouncedRenderPicksIntoWindow(
             [...arrOfSmth].sort((a, b) => b.comments.length - a.comments.length)
           );
@@ -125,8 +128,8 @@ export const renderPicksOnError = (errorMessage) => {
   const errorWindowElem = document.querySelector('#window-error');
   errorWindowElem.children[0].textContent = errorMessage;
   errorWindowElem.classList.remove('hidden');
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   const timer = setTimeout(() => {
     errorWindowElem.classList.add('hidden');
-  }, DELAY_FOR_ERROR);
+  }, DELAY.ERROR);
 };
