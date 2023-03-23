@@ -1,7 +1,45 @@
-//import arrOfSmth from './utils.js';
+import { renderPicksOnOk, renderPicksOnError } from './render-picks.js';
+import editForm from './form.js';
+import { loadImgElem } from './data-for-form.js';
+import { debouncing } from './render-picks.js';
 
-import renderPicksIntoWindow from './render-picks.js';
-import editorForm from './form.js';
+const messageError = 'Нет смысла пытаться, ошибка сервера';
 
-renderPicksIntoWindow();
-editorForm();
+export const URLS = {
+  URL_SEND: 'https://28.javascript.pages.academy/kekstagram',
+  URL_MAIN: 'https://28.javascript.pages.academy/kekstagram/data',
+};
+
+const STATUS_CODES_MIN_MAX = {
+  MIN: 200,
+  MAX: 300,
+};
+
+const downloadData = async () => {
+  try {
+    const res = await fetch(URLS.URL_MAIN);
+    if (
+      res.status >= STATUS_CODES_MIN_MAX.MIN &&
+      res.status < STATUS_CODES_MIN_MAX.MAX
+    ) {
+      const ans = await res.json();
+      return ans;
+    } else {
+      throw res.statusText;
+    }
+  } catch (error) {
+    renderPicksOnError(error);
+  }
+};
+
+const data = await downloadData();
+
+if (data !== undefined) {
+  renderPicksOnOk(data);
+  editForm();
+} else {
+  loadImgElem.type = 'button';
+  loadImgElem.onclick = debouncing(() => {
+    renderPicksOnError(messageError);
+  }, 500);
+}
