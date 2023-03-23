@@ -3,7 +3,7 @@ import editForm from './form.js';
 import { loadImgElem } from './data-for-form.js';
 import { debouncing } from './render-picks.js';
 
-const messageError = 'Нет смысла пытаться, ошибка сервера';
+const messageError = 'Ошибка сервера';
 
 export const URLS = {
   URL_SEND: 'https://28.javascript.pages.academy/kekstagram',
@@ -14,6 +14,8 @@ const STATUS_CODES_MIN_MAX = {
   MIN: 200,
   MAX: 300,
 };
+
+const RenderDebouncedPicksOnError = debouncing(renderPicksOnError, 500);
 
 const downloadData = async () => {
   try {
@@ -39,7 +41,7 @@ if (data !== undefined) {
   editForm();
 } else {
   loadImgElem.type = 'button';
-  loadImgElem.onclick = debouncing(() => {
-    renderPicksOnError(messageError);
-  }, 500);
+  loadImgElem.onclick = () => {
+    RenderDebouncedPicksOnError(messageError);
+  };
 }
