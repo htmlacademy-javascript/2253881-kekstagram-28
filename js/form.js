@@ -3,7 +3,7 @@ import {
   COUNT_OF_SYMBOLS_TEXTAREA,
   STEP_100,
   STEP_25,
-  URL,
+  URL_SEND,
   COUNT_FOR_CAGES,
   loadImgElem,
   formEditedImgElem,
@@ -143,21 +143,15 @@ const editorForm = () => {
     evt.preventDefault();
     formEditedImgElem.classList.remove('hidden');
     document.body.classList.add('modal-open');
-
-    const fileReader = new FileReader();
-
-    fileReader.onload = () => {
-      const fName = evt.target.files[0].name.toLowerCase();
-      const matches = FILE_TYPES.some((elem) => fName.endsWith(elem));
-      if (matches) {
-        imgFromFormElem.src = `${fileReader.result}`;
-        allPicksElem.forEach((elem) => {
-          elem.style.backgroundImage = `url(${fileReader.result})`;
-        });
-      }
-    };
-
-    fileReader.readAsDataURL(evt.target.files[0]);
+    const file = evt.target.files[0];
+    const fName = evt.target.files[0].name.toLowerCase();
+    const matches = FILE_TYPES.some((elem) => fName.endsWith(elem));
+    if (matches) {
+      imgFromFormElem.src = URL.createObjectURL(file);
+      allPicksElem.forEach((elem) => {
+        elem.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+      });
+    }
   };
 
   noUiSlider.create(sliderContainerElem, {
@@ -295,7 +289,7 @@ const editorForm = () => {
     evt.preventDefault();
     const data = new FormData(evt.target);
 
-    fetch(URL, {
+    fetch(URL_SEND, {
       method: METHODS.post,
       body: data,
     })

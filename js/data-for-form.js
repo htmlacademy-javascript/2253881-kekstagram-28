@@ -13,7 +13,7 @@ export const METHODS = {
   get: 'GET',
 };
 export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-export const URL = 'https://28.javascript.pages.academy/kekstagram';
+export const URL_SEND = 'https://28.javascript.pages.academy/kekstagram';
 export const formElem = document.querySelector('.img-upload__form');
 export const loadImgElem = document.querySelector('#upload-file');
 export const formEditedImgElem = document.querySelector('.img-upload__overlay');
