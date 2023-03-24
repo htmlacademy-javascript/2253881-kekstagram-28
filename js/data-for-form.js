@@ -13,7 +13,7 @@ export const METHODS = {
   get: 'GET',
 };
 export const STATUS_ERROR = 'Ошибка загрузки';
-export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+export const TYPES = ['jpg', 'jpeg', 'png'];
 export const formElem = document.querySelector('.img-upload__form');
 export const loadImgElem = document.querySelector('#upload-file');
 export const formEditedImgElem = document.querySelector('.img-upload__overlay');

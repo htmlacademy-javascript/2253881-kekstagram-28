@@ -22,7 +22,7 @@ import {
   formElem,
   succesElem,
   errorElem,
-  FILE_TYPES,
+  TYPES,
   CHROME,
   SEPIA,
   MARVIN,
@@ -142,7 +142,7 @@ const editForm = () => {
     document.body.classList.add('modal-open');
     const file = evt.target.files[0];
     const fName = evt.target.files[0].name.toLowerCase();
-    const matches = FILE_TYPES.some((elem) => fName.endsWith(elem));
+    const matches = TYPES.some((elem) => fName.endsWith(elem));
     if (matches) {
       imgFromFormElem.src = URL.createObjectURL(file);
       allPicksElem.forEach((elem) => {
