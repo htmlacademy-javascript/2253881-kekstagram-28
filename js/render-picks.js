@@ -62,17 +62,17 @@ const getRandomArbitrary = (min, max) =>
 
 //10 рандомных элементов из основного массива
 export const cutTenRandomElemsFromArr = (arr) => {
-  const arrOfIndexs = [];
+  const arrOfIds = [];
 
   for (let i = 0; i < 10; i++) {
     let number = getRandomArbitrary(0, arr.length);
-    while (arrOfIndexs.includes(number)) {
+    while (arrOfIds.includes(number)) {
       number = getRandomArbitrary(0, arr.length);
     }
-    arrOfIndexs.push(number);
+    arrOfIds.push(number);
   }
 
-  return arrOfIndexs.map((elem) => arr[elem]);
+  return arrOfIds.map((elem) => arr[elem]);
 };
 
 //удаляет активный класс на клик и добавляет на тардет кнопку.
